@@ -1,24 +1,29 @@
-import clean from 'rollup-plugin-clean';
+import clear from 'rollup-plugin-clear';
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import typescript from 'rollup-plugin-typescript';
-import pkg from './package.json' assert { type: 'json' };
-
-import { getMainScriptPath } from './scripts/getFile.cjs';
+import glob from 'glob';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+// import pkg from './package.json' assert { type: 'json' };
 
 export default [
   {
-    input: getMainScriptPath(),
+    input: Object.fromEntries(
+      glob.sync('src/*.ts').map(file => [
+        path.relative('src', file.slice(0, file.length - path.extname(file).length)),
+        fileURLToPath(new URL(file, import.meta.url))
+      ])
+    ),
     output: {
-      name: 'howLongUntilLunch',
-      file: pkg.browser,
-      format: 'umd'
+      dir: 'dist',
+      format: 'es'
     },
     plugins: [
-      clean(), // so Rollup can clean up an existing dist folder
-      resolve(), // so Rollup can find required modules
-      commonjs(), // so Rollup can convert required modules to an ES
-      typescript() // so Rollup can convert TypeScript to JavaScript
+      clear({ targets: ['dist'] }),
+      resolve(),
+      commonjs(),
+      typescript()
     ]
   }
 ];
