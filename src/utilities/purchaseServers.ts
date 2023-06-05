@@ -12,7 +12,7 @@ export async function main(ns: NS): Promise<void> {
   const filePaths = { hack: "hack.js" };
 
   const ramScript = ns.getScriptRam(filePaths.hack);
-  const purchasedServerLimit = ns.getPurchasedServerLimit();
+  const purchasedServerLimit = 25; // HACK: ns.getPurchasedServerLimit();
   const purchasedServers = ns.getPurchasedServers();
   const serverCost = ns.getPurchasedServerCost(targetRam);
 
@@ -29,7 +29,7 @@ export async function main(ns: NS): Promise<void> {
           ns.tprint(`ERROR: Failed to purchase "${purchasedServerName}". Moving on...`);
         } else {
           purchasedServers.push(purchasedServerName);
-          ns.tprint(`INFO: Purchased server: ${purchasedServerName}`);
+          ns.print(`INFO: Purchased server ${purchasedServerName} for ${ns.formatNumber(serverCost)}.`);
           i++;
         }
       } else {
@@ -38,7 +38,7 @@ export async function main(ns: NS): Promise<void> {
       }
 
       // !: Removing this line will cause an infinite loop and crash the game.
-      await ns.sleep(1000);
+      await ns.sleep(500);
     }
   } else {
     ns.tprint(`WARN: Purchased server limit reached (${purchasedServerLimit}).`);
@@ -53,7 +53,7 @@ export async function main(ns: NS): Promise<void> {
 
       if (cost < balance) {
         if (ns.upgradePurchasedServer(purchasedServers[i], targetRam)) {
-          ns.tprint(`INFO: Upgraded ${msgSuffix}.`);
+          ns.print(`INFO: Upgraded ${msgSuffix} for ${cost}.`);
         } else {
           ns.tprint(`ERROR: Failed to upgrade ${msgSuffix}.`);
         }

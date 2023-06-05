@@ -1,6 +1,6 @@
-import { NS } from '@ns'
-
 /** @param {NS} ns */
-export async function main(ns : NS) : Promise<void> {
+import { NS } from '@ns';
+
+export async function main(ns: NS): Promise<void> {
 
 }

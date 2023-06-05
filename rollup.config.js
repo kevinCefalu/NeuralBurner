@@ -10,20 +10,47 @@ import { fileURLToPath } from 'node:url';
 export default [
   {
     input: Object.fromEntries(
-      glob.sync('src/*.ts').map(file => [
-        path.relative('src', file.slice(0, file.length - path.extname(file).length)),
-        fileURLToPath(new URL(file, import.meta.url))
-      ])
+      glob
+        .sync('src/*.ts')
+        .map(file => [
+          path.relative('src', file.slice(0, file.length - path.extname(file).length)),
+          fileURLToPath(new URL(file, import.meta.url))
+        ])
     ),
     output: {
       dir: 'dist',
       format: 'es'
     },
-    plugins: [
-      clear({ targets: ['dist'] }),
-      resolve(),
-      commonjs(),
-      typescript()
-    ]
+    plugins: [resolve(), commonjs(), typescript()]
+  },
+  {
+    input: Object.fromEntries(
+      glob
+        .sync('src/managers/**/manager.ts')
+        .map(file => [
+          path.relative('src', file.slice(0, file.length - path.extname(file).length)),
+          fileURLToPath(new URL(file, import.meta.url))
+        ])
+    ),
+    output: {
+      dir: 'dist',
+      format: 'es'
+    },
+    plugins: [resolve(), commonjs(), typescript()]
+  },
+  {
+    input: Object.fromEntries(
+      glob
+        .sync('src/utilities/**/*.ts')
+        .map(file => [
+          path.relative('src', file.slice(0, file.length - path.extname(file).length)),
+          fileURLToPath(new URL(file, import.meta.url))
+        ])
+    ),
+    output: {
+      dir: 'dist',
+      format: 'es'
+    },
+    plugins: [resolve(), commonjs(), typescript()]
   }
 ];

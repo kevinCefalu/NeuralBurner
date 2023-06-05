@@ -43,11 +43,11 @@ export async function main(ns: NS): Promise<void> {
 
   const filePaths = { hack: "hack.js" };
   const scriptRam = ns.getScriptRam(filePaths.hack);
-  const serverCost = ns.getPurchasedServerCost(targetRam);
   const purchasedServers = ns.getPurchasedServers();
 
   for (let i = 0; i < purchasedServers.length; i++) {
     if ((ns.getServerMaxRam(purchasedServers[i])) < targetRam) {
+      const serverUpgradeCost = ns.getPurchasedServerUpgradeCost(purchasedServers[i], targetRam);
       const cost = ns.getPurchasedServerUpgradeCost(purchasedServers[i], targetRam);
       const balance = ns.getServerMoneyAvailable('home');
       const msgSuffix = `${purchasedServers[i]} to ${ns.formatRam(targetRam)}`;
@@ -61,7 +61,7 @@ export async function main(ns: NS): Promise<void> {
         }
       } else {
         ns.tprint(`WARN :: Insufficient funds to upgrade ${msgSuffix}. ` +
-          `Need ${ns.formatNumber(serverCost)} but only have ${ns.formatNumber(balance)}.`);
+          `Need ${ns.formatNumber(serverUpgradeCost)} but only have ${ns.formatNumber(balance)}.`);
       }
     }
   }

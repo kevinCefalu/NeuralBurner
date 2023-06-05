@@ -5,6 +5,7 @@
 /package-lock.json
 
 # Ignore basic folders
+/.game-backups
 /dist
 /.rpt2_cache
 /node_modules

@@ -78,11 +78,18 @@ export class ServerThresholds {
 export class InternalServer {
   private ns: NS;
   public readonly name: string;
+  public readonly isMine: boolean;
   public readonly thresholds: ServerThresholds;
+  public readonly neighboringServers: string[];
+
+  private const purchasedServerNamePrefix = 'server-';
 
   constructor(ns: NS, name: string) {
     this.ns = ns;
     this.name = name;
-    this.thresholds = ServerThresholds.getThresholds(ns, name);
+    this.isMine = this.name === 'home' || this.name.indexOf(this.purchasedServerNamePrefix) > -1;
+    this.thresholds = ServerThresholds.getThresholds(ns, this.name);
+    this.neighboringServers = this.ns.scan(this.name)
+      .filter((name) => !name.startsWith(this.purchasedServerNamePrefix));
   }
 }

@@ -1,4 +1,4 @@
-
+/** @param {NS} ns */
 import { NS } from '@ns';
 
 export async function main(ns: NS): Promise<void> {
@@ -19,5 +19,5 @@ export async function main(ns: NS): Promise<void> {
   servers.shift();
 
   ns.rm(filePaths.serverList);
-  ns.write(filePaths.serverList, servers.join());
+  ns.write(filePaths.serverList, servers.join("\n"));
 }

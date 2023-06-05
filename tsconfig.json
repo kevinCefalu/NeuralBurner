@@ -11,7 +11,7 @@
     // "composite": true,                               // Enable project compilation
     // "noEmit": true,                                  // Do not emit outputs.
     // "importHelpers": true,                           // Import emit helpers from 'tslib'.
-    // "isolatedModules": true,                         // Transpile each file as a separate module (similar to 'ts.transpileModule').
+    "isolatedModules": true,                         // Transpile each file as a separate module (similar to 'ts.transpileModule').
     "strict": true,
     "noImplicitThis": true,
     "noUnusedLocals": true,
