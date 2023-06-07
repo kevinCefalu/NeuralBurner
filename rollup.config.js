@@ -23,21 +23,21 @@ export default [
     },
     plugins: [resolve(), commonjs(), typescript()]
   },
-  {
-    input: Object.fromEntries(
-      glob
-        .sync('src/managers/**/manager.ts')
-        .map(file => [
-          path.relative('src', file.slice(0, file.length - path.extname(file).length)),
-          fileURLToPath(new URL(file, import.meta.url))
-        ])
-    ),
-    output: {
-      dir: 'dist',
-      format: 'es'
-    },
-    plugins: [resolve(), commonjs(), typescript()]
-  },
+  // {
+  //   input: Object.fromEntries(
+  //     glob
+  //       .sync('src/managers/**/manager.ts')
+  //       .map(file => [
+  //         path.relative('src', file.slice(0, file.length - path.extname(file).length)),
+  //         fileURLToPath(new URL(file, import.meta.url))
+  //       ])
+  //   ),
+  //   output: {
+  //     dir: 'dist',
+  //     format: 'es'
+  //   },
+  //   plugins: [resolve(), commonjs(), typescript()]
+  // },
   {
     input: Object.fromEntries(
       glob

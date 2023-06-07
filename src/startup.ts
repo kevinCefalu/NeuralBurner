@@ -137,13 +137,13 @@ async function ownTarget(ns: NS, target: string, portOpener: Function[],
     }
     ns.nuke(target);
 
-    // TODO: Figure out how to determine if the singularity API is available
-    try {
-      ns.singularity.connect(target);
-      await ns.singularity.installBackdoor();
-    } catch (e) {
-      ns.print(`ERROR :: Failed to install backdoor on ${target}.\nException: ${e}`);
-    }
+    // // TODO: Figure out how to determine if the singularity API is available
+    // try {
+    //   ns.singularity.connect(target);
+    //   await ns.singularity.installBackdoor();
+    // } catch (e) {
+    //   ns.print(`ERROR :: Failed to install backdoor on ${target}.\nException: ${e}`);
+    // }
 
     return true;
   }
