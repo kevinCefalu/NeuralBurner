@@ -184,7 +184,7 @@ export async function main(ns: NS): Promise<void> {
 
   if (flags.tail as boolean) {
     ns.tail();
-    ns.resizeTail(181, 42);
+    ns.resizeTail(400, 42);
   }
 
   const portCrackers = PORT_CRACKER(ns);

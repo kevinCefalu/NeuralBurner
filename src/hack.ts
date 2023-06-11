@@ -180,6 +180,22 @@ export async function attack(ns: NS, server: InternalServer, verbose = false): P
   await _hack(ns, server, verbose);
 }
 
+export function rotateArrayToItem(ns: NS, arr: string[], item: string) {
+  let index = arr.indexOf(item);
+
+  if (index === -1) {
+    ns.tprint(`WARN :: ${item} not found in server name array. Skipping shift operation.`);
+    return arr;
+  }
+
+  for (let i = 0; i < index; i++) {
+    let shiftedItem = arr.shift();
+    arr.push(shiftedItem);
+  }
+
+  return arr;
+}
+
 export async function main(ns: NS): Promise<void> {
   ns.clearLog();
   ns.disableLog("ALL");
@@ -188,10 +204,12 @@ export async function main(ns: NS): Promise<void> {
 
   if (flags.tail as boolean) {
     ns.tail();
-    ns.resizeTail(181, 42);
+    ns.resizeTail(400, 42);
   }
 
-  const targets = ServerNames.map((name) => new InternalServer(ns, name));
+  const targets = rotateArrayToItem(ns, ServerNames, ns.getHostname()).map((name) => new InternalServer(ns, name));
+
+  // const targets = rotateArrayToItem((ServerNames.map((name) => new InternalServer(ns, name))), ns.getHostname())
 
   while (true) {
     // TODO: Improve target choice
